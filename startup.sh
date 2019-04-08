@@ -6,7 +6,6 @@
 
 
 ##sudo -u username command   Run as original user
-$currentUser = $USER
 
 
 
@@ -21,7 +20,7 @@ $currentUser = $USER
 	echo "installing php Version 7.1";
 	sudo apt install php7.1
 	echo "For more information about installing additional version of php visit:\n https://www.tecmint.com/install-different-php-versions-in-ubuntu/";
-	echo php -v
+	php -v
 
 ##INSTALL X DEBUG AND MODIFY PHP INI
 	echo ":::installing xDebug:::"
@@ -123,32 +122,44 @@ file_put_contents('./cleaned.php', substr(\$encodedlayer, strpos(\$encodedlayer,
 sudo snap install code --classic
 
 ##Installe debugger plugin
-sudo code --install-extension felixfbecker.php-debug
+code --install-extension felixfbecker.php-debug
 
 ## Create a launch JSON for debug plugin
 ##Need to escape text
 
-mkdir "~/Desktop/phpDebug/.vscode"
+mkdir ~/Desktop/phpDebug/.vscode & touch ~/Desktop/phpDebug/phpDebug.code-workspace
 
 echo -e "\
 {\n\
-    'version': '0.2.0',\n\
-    'configurations': [\n\
+    \"version\": \"0.2.0\",\n\
+    \"configurations\": [\n\
         {\n\
-            'name': 'Listen for XDebug',\n\
-            'type': 'php',\n\
-            'request': 'launch',\n\
-            'port': 9000\n\
+            \"name\": \"Listen for XDebug\",\n\
+            \"type\": \"php\",\n\
+            \"request\": \"launch\",\n\
+            \"port\": 9000\n\
         },\n\
         {\n\
-            'name': 'Launch currently open script',\n\
-            'type': 'php',\n\
-            'request': 'launch',\n\
-            'program': '\${file}',\n\
-            'cwd': '\${fileDirname}',\n\
-            'port': 9000\n\
+            \"name\": \"Launch currently open script\",\n\
+            \"type\": \"php\",\n\
+            \"request\": \"launch\",\n\
+            \"program\": \"\${file}\",\n\
+            \"cwd\": \"\${fileDirname}\",\n\
+            \"port\": 9000\n\
         }\n\
     ]\n\
 }\n\
-" >> .vscode/launch.json
+" >> .vscode/launch.json\
+&\
+echo -e "\
+{\n\
+	\"folders\": [\n\
+		{\n\
+			"path": "."\n\
+		}\n\
+	]\n\
+}\n\
+" >> ./phpDebug.code-workspace
+
+##Need to setup workspace folder##
 
