@@ -2,10 +2,21 @@
 
 ## Bash script to set up PHP debugging environment and Nencessary tools:::
 ##To do, Work eval hook into this somehow, I think itd be easiest to package docker and run it off that since its a dev build of PHP which is annoying to work with.
+##Fix permissions issues
+
+
+##sudo -u username command   Run as original user
+$currentUser = $USER
+
+
+
 
 
 
 #Install PHP, DEFAULT TO 7.1
+
+	##Fix Stuff
+	sudo apt --fix-broken install python-pycurl python-apt
 	sudo apt install python-software-properties
 	sudo add-apt-repository ppa:ondrej/php
 	echo "installing php Version 7.1";
@@ -42,7 +53,7 @@ mkdir ~/Desktop/phpDebug
 cd ~/Desktop/phpDebug
 
 
-## install Composer
+## install Composer, 
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 php composer-setup.php
@@ -51,7 +62,7 @@ php -r "unlink('composer-setup.php');"
 echo 'Composer succesfully installed in Desktop/phpDebug'
 
 
-##Install pretty Print
+##Install additional modules
 php composer.phar require nikic/php-parser
 
 touch PrettyPrint.php
@@ -109,46 +120,36 @@ file_put_contents('./cleaned.php', substr(\$encodedlayer, strpos(\$encodedlayer,
 
 
 
-## Install Visual Studio Code!
-sudo snap install vscode --classic
+## Install Visual Studio Code
+sudo snap install code --classic
 
-##Installe debugger plugin!
+##Installe debugger plugin
 sudo code --install-extension felixfbecker.php-debug
 
 ## Create a launch JSON for debug plugin
+##Need to escape text
+
+mkdir "~/Desktop/phpDebug/.vscode"
+
 echo -e "\
-{\
-    'version': '0.2.0',\
-    'configurations': [\
-        {\
-            'name': 'Listen for XDebug',\
-            'type': 'php',\
-            'request': 'launch',\
-            'port': 9000\
-        },\
-        {\
-            'name': 'Launch currently open script',\
-            'type': 'php',\
-            'request': 'launch',\
-            'program': '${file}',\
-            'cwd': '${fileDirname}',\
-            'port': 9000\
-        }\
-    ]\
-}\
+{\n\
+    'version': '0.2.0',\n\
+    'configurations': [\n\
+        {\n\
+            'name': 'Listen for XDebug',\n\
+            'type': 'php',\n\
+            'request': 'launch',\n\
+            'port': 9000\n\
+        },\n\
+        {\n\
+            'name': 'Launch currently open script',\n\
+            'type': 'php',\n\
+            'request': 'launch',\n\
+            'program': '\${file}',\n\
+            'cwd': '\${fileDirname}',\n\
+            'port': 9000\n\
+        }\n\
+    ]\n\
+}\n\
 " >> .vscode/launch.json
 
-
-##Install Bless Hex Editor:
-sudo apt-get install bless
-
-##NOT STABLE, NEED TO TEST MORE WITH PYTHON/PIP
-##Get python
-#sudo apt-get install python 3
-##Package Manager
-#sudo apt-get install python-pip
-##Required module
-#pip install -U olefile
-## Finally get the ole script
-#wget "http://didierstevens.com/files/software/oledump_V0_0_3.zip"
-#unzip "oledump_V0_0_3.zip"
