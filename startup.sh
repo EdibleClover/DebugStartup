@@ -16,8 +16,7 @@ $currentUser = $USER
 #Install PHP, DEFAULT TO 7.1
 
 	##Fix Stuff
-	sudo apt --fix-broken install python-pycurl python-apt
-	sudo apt install python-software-properties
+	sudo apt-get install software-properties-common
 	sudo add-apt-repository ppa:ondrej/php
 	echo "installing php Version 7.1";
 	sudo apt install php7.1
