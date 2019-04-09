@@ -36,8 +36,8 @@ fi
 	
 	echo -e "[XDebug]\n\
 		xdebug.remote_enable = 1\n\
-		xdebug.remote_autostart = 1\n" | sudo tee -a ${inifile} >/dev/null  
-
+		xdebug.remote_autostart = 1\n" | sudo tee -a ${iniFile} > /dev/null  
+#####
 
 		
 ##Check and make sure xDebug is listed as a PHP module
@@ -62,9 +62,7 @@ iniCheck = `grep 'xdebug' ${inifile}`
 echo -e "Installing Additional tools\n list:\n https://github.com/prettier/plugin-php\n\n"
 ##Lets setup a directory with all of our tools
 mkdir ~/Desktop/phpDebug
-
 cd ~/Desktop/phpDebug
-
 
 ## install Composer, 
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -73,7 +71,6 @@ php composer-setup.php
 php -r "unlink('composer-setup.php');"
 
 echo -e '\n\nComposer succesfully installed in Desktop/phpDebug\n\n'
-
 
 ##Install additional modules
 php composer.phar require nikic/php-parser
