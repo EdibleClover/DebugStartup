@@ -7,44 +7,59 @@
 
 ##sudo -u username command   Run as original user
 
+#Skip confirmations with yes command
 
+if [ $# -ge 1 ]
+then
+    while true; do echo "$1"; done
+else
+    while true; do echo y; done
+fi
 
 
 
 
 #Install PHP, DEFAULT TO 7.1
-
-	##Fix Stuff
 	sudo apt-get install software-properties-common
 	sudo add-apt-repository ppa:ondrej/php
-	echo "installing php Version 7.1";
+	echo -e "\n\ninstalling php Version 7.1\n\n";
 	sudo apt install php7.1
-	echo "For more information about installing additional version of php visit:\n https://www.tecmint.com/install-different-php-versions-in-ubuntu/";
+	echo -e "For more information about installing additional version of php visit:\n https://www.tecmint.com/install-different-php-versions-in-ubuntu/";
 	php -v
-
-##INSTALL X DEBUG AND MODIFY PHP INI
-	echo ":::installing xDebug:::"
-		sudo apt-get install php-xdebug
-	echo 'checking INI\n'
-		iniFile=$(php -r 'echo php_ini_loaded_file();')
-	echo "modifying PHP ini @\n ${iniFile}"
 	
-	sudo echo -e "[XDebug]\n\
+##INSTALL X DEBUG AND MODIFY PHP INI
+	echo -e "\n\n:::installing xDebug:::\n\n"
+		sudo apt-get install php-xdebug
+	echo -e 'checking INI\n'
+		iniFile=`php -r 'echo php_ini_loaded_file();'`
+	echo -e "modifying PHP ini @ \\n ${iniFile}"
+	
+	echo -e "[XDebug]\n\
 		xdebug.remote_enable = 1\n\
-		xdebug.remote_autostart = 1\n" >> ${iniFile}
+		xdebug.remote_autostart = 1\n" | sudo tee -a ${inifile} >/dev/null  
+
+
 		
 ##Check and make sure xDebug is listed as a PHP module
-	xDebugCheck=$(php -m | grep 'xdebug')
+	xDebugCheck=`php -m | grep 'xdebug'`
 	if [ -z '$xDebugCheck' ]
 	then
-			echo "Xdebug installation failed\n"
+			echo -e "Xdebug installation failed\n"
 	else
-			echo "Xdebug installation succeeded!\n"
+			echo -e "Xdebug installation succeeded!\n"
 	fi
 	
-echo "xDebug and PHP have been successfully installed!"
+## Make sure that ini file was written to
+iniCheck = `grep 'xdebug' ${inifile}`
+	if [ -z '$iniCheck' ]
+	then
+			echo -e "\n\nini file successfully modified!\n\n"
+	else
+			echo -e "\n\nini modification failed, you may need to manually modify your PHP ini file @ ${inifile}\n\n"
+	fi
 
-echo "Installing Additional tools\n list:\n https://github.com/prettier/plugin-php"
+
+echo -e "Installing Additional tools\n list:\n https://github.com/prettier/plugin-php\n\n"
 ##Lets setup a directory with all of our tools
 mkdir ~/Desktop/phpDebug
 
@@ -57,7 +72,7 @@ php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dc
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
 
-echo 'Composer succesfully installed in Desktop/phpDebug'
+echo -e '\n\nComposer succesfully installed in Desktop/phpDebug\n\n'
 
 
 ##Install additional modules
@@ -149,13 +164,13 @@ echo -e "\
         }\n\
     ]\n\
 }\n\
-" >> .vscode/launch.json\
-&\
+" >> .vscode/launch.json
+
 echo -e "\
 {\n\
 	\"folders\": [\n\
 		{\n\
-			"path": "."\n\
+			\"path\": \".\"\n\
 		}\n\
 	]\n\
 }\n\
