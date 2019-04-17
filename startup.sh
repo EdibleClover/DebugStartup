@@ -1,23 +1,8 @@
 #!/usr/bin/
-
 ## Bash script to set up PHP debugging environment and Nencessary tools:::
-##To do, Work eval hook into this somehow, I think itd be easiest to package docker and run it off that since its a dev build of PHP which is annoying to work with.
-##Fix permissions issues
-
-
-##sudo -u username command   Run as original user
-
-#Skip confirmations with yes command
-
-if [ $# -ge 1 ]
-then
-    while true; do echo "$1"; done
-else
-    while true; do echo y; done
-fi
-
-
-
+## Make sure to update sys time when reverting SnapShots.
+#sudo timedatectl set-ntp off
+#sudo timedatectl set-ntp on
 
 #Install PHP, DEFAULT TO 7.1
 	sudo apt-get install software-properties-common
@@ -50,12 +35,12 @@ fi
 	fi
 	
 ## Make sure that ini file was written to
-iniCheck = `grep 'xdebug' ${inifile}`
+iniCheck = `grep 'xdebug' ${iniFile}`
 	if [ -z '$iniCheck' ]
 	then
 			echo -e "\n\nini file successfully modified!\n\n"
 	else
-			echo -e "\n\nini modification failed, you may need to manually modify your PHP ini file @ ${inifile}\n\n"
+			echo -e "\n\nini modification failed, you may need to manually modify your PHP ini file @ ${iniFile}\n\n"
 	fi
 
 
@@ -130,7 +115,7 @@ file_put_contents('./cleaned.php', substr(\$encodedlayer, strpos(\$encodedlayer,
 
 
 
-## Install Visual Studio Code
+## Install Visual Studio Code  ##Something Goofy With this
 sudo snap install code --classic
 
 ##Installe debugger plugin
@@ -173,5 +158,7 @@ echo -e "\
 }\n\
 " >> ./phpDebug.code-workspace
 
-##Need to setup workspace folder##
+touch ~/Desktop/phpDebug/mal.php
 
+##Start vsCode   ##Fuck code for starting Firefox at the same Time
+vscode  ~/Desktop/phpDebug/mal.php
