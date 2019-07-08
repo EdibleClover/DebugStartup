@@ -146,7 +146,7 @@ echo -e "\
         }\n\
     ]\n\
 }\n\
-" >> .vscode/launch.json
+" > .vscode/launch.json
 
 echo -e "\
 {\n\
@@ -156,7 +156,7 @@ echo -e "\
 		}\n\
 	]\n\
 }\n\
-" >> ./phpDebug.code-workspace
+" > ./phpDebug.code-workspace
 
 touch ~/Desktop/phpDebug/mal.php
 
