@@ -35,7 +35,7 @@
 	fi
 	
 ## Make sure that ini file was written to
-iniCheck = `grep 'xdebug' ${iniFile}`
+iniCheck=`grep 'xdebug' ${iniFile}`
 	if [ -z '$iniCheck' ]
 	then
 			echo -e "\n\nini file successfully modified!\n\n"
