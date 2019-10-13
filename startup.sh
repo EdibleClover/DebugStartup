@@ -5,12 +5,12 @@
 #sudo timedatectl set-ntp on
 
 #Install PHP, DEFAULT TO 7.1
-	sudo apt-get install software-properties-common
-	sudo add-apt-repository ppa:ondrej/php
-	echo -e "\n\ninstalling php Version 7.1\n\n";
-	sudo apt install php7.1
-	echo -e "For more information about installing additional version of php visit:\n https://www.tecmint.com/install-different-php-versions-in-ubuntu/";
-	php -v
+	#sudo apt-get install software-properties-common
+	#sudo add-apt-repository ppa:ondrej/php
+	#echo -e "\n\ninstalling php Version 7.1\n\n";
+	#sudo apt install php7.1
+	#echo -e "For more information about installing additional version of php visit:\n https://www.tecmint.com/install-different-php-versions-in-ubuntu/";
+	#php -v
 	
 ##INSTALL X DEBUG AND MODIFY PHP INI
 	echo -e "\n\n:::installing xDebug:::\n\n"
@@ -159,5 +159,5 @@ echo -e "\
 
 touch ~/Desktop/phpDebug/mal.php
 
-##Start vsCode   ##Fuck code for starting Firefox at the same Time
+##Start vsCode   #
 code  ~/Desktop/phpDebug/mal.php
